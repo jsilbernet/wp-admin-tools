@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+backup_dir="${BACKUP_HOME}/wp/content"
+
+now=`date "+%Y-%m-%d_%H-%M-%S"`
+backup_folder="${MAIN_SITE}_${now}"
+
+if [[ ! -d "${backup_dir}/${backup_folder}" ]] ; then
+  echo "Creating backup folder ${backup_folder} at ${backup_dir} ..."
+  mkdir "${backup_dir}/${backup_folder}"
+fi
+
+echo "Backing up $backup_folder to $backup_dir ..."
+
+cd "$WP_HOME"
+wp export --dir="${backup_dir}/${backup_folder}"
+
+echo "Done."

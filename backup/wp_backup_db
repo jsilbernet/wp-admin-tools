@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+backup_dir="${BACKUP_HOME}/wp/db"
+
+now=`date "+%Y-%m-%d_%H-%M-%S"`
+backup_file="${MAIN_SITE}_${now}.sql.gz"
+
+echo "Backing up $backup_file to $backup_dir ..."
+
+cd "$WP_HOME"
+wp db export - | gzip > "${backup_dir}/${backup_file}"
+
+echo "Done."

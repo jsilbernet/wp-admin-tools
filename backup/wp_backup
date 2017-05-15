@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+echo "Performing complete WordPress backup to $BACKUP_HOME ..."
+
+wp_backup_config
+wp_backup_db
+wp_backup_install
+
+echo "All done."

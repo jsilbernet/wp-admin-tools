@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# # Fix WordPress permissions #
+
+# * Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+# See [Proper WordPress Filesystem Permissions And Ownerships][wordpress-permissions].
+# [wordpress-permissions]: https://www.smashingmagazine.com/2014/05/proper-wordpress-filesystem-permissions-ownerships/
+
+# ## Set up variables ##
+
+# owner defaults to server
+ch_user='www-data'
+# owner can be set to the JSWAT user via `--user` parameter
+if [[ "$1" == --user ]] ; then
+  ch_user="$USER_LOGIN"
+fi
+# group defaults to server
+ch_group='www-data'
+# directory for changes to take place is WP home
+ch_dir="$WP_HOME"
+
+# ## Check for errors  ##
+
+# ### WordPress home directory not found — Abort. ###
+
+if [[ ! -d "$ch_dir" ]] ; then
+  echo "Error: WordPress home directory not found — Abort."
+  exit 1
+fi
+
+# ## Fix ownership and permissions
+
+echo "Fixing permissions for $ch_dir ..."
+
+# ### Fix ownership
+
+sudo find "$ch_dir" -exec chown --no-dereference "${ch_user}:${ch_group}" {} +
+
+# ### Fix permissions
+
+sudo find "$ch_dir" -type f -exec chmod 664 {} +
+sudo find "$ch_dir" -type d -exec chmod 775 {} +
+sudo chmod 664 "${ch_dir}/wp-config.php"

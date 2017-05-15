@@ -1,0 +1,44 @@
+# Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+# ### set environment variables ###
+
+# determine user
+USER_LOGIN=$(whoami)
+
+# build paths
+USER_HOME="/home/master"
+ADMIN_HOME="$USER_HOME/admin"
+BACKUP_HOME="$ADMIN_HOME/backup"
+IMPORT_HOME="$ADMIN_HOME/import"
+
+SITES_HOME="/home/master/applications"
+MAIN_SITE="mainsite.com"
+WP_HOME="$SITES_HOME/$MAIN_SITE/public_html"
+THEME_HOME="$WP_HOME/wp-content/themes/child-theme"
+
+# export environment variables
+export USER_LOGIN USER_HOME ADMIN_HOME BACKUP_HOME IMPORT_HOME
+export SITES_HOME MAIN_SITE WP_HOME THEME_HOME
+
+export PYTHONUSERBASE="$ADMIN_HOME/tools/pip"
+
+# ### set path ###
+
+PATH="$PATH:$ADMIN_HOME/tools"
+PATH="$PATH:$ADMIN_HOME/tools/wp-cli" 
+PATH="$PATH:$ADMIN_HOME/tools/backup"
+PATH="$PATH:$ADMIN_HOME/tools/restore"
+PATH="$PATH:$ADMIN_HOME/tools/pip/bin"
+export PATH
+
+# ### source WP-CLI autocomplete ###
+
+source $ADMIN_HOME/tools/wp-cli/wp-completion.bash
+
+# ### source AWS-CLI autocomplete ###
+
+source $ADMIN_HOME/tools/pip/bin/aws_bash_completer
+
+# ### source .profile ###
+
+source ~/.profile

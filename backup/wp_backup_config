@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Copyright (c) 2015 Jascha Silbermann [http://jsilber.net]
+
+backup_dir="${BACKUP_HOME}/wp/config"
+
+now=`date "+%Y-%m-%d_%H-%M-%S"`
+backup_file="${MAIN_SITE}_${now}.config.tar.gz"
+backup_htaccess="./.htaccess"
+backup_wp_config="./wp-config.php"
+backup_robots="./robots.txt"
+
+echo "Backing up $backup_file to $backup_dir ..."
+
+cd "$WP_HOME"
+
+tar -cpzf "${backup_dir}/${backup_file}" "$backup_htaccess" "$backup_wp_config" "$backup_robots"
+
+# cp $WP_HOME/.htaccess $backup_dir/$backup_htaccess
+# cp $WP_HOME/wp-config.php $backup_dir/$backup_wp_config
+# cp $WP_HOME/robots.txt $backup_dir/$backup_robots
+
+echo "Done."
